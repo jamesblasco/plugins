@@ -19,7 +19,9 @@ class UrlLauncherPlugin extends UrlLauncherPlatform {
   /// Returns the newly created window.
   @visibleForTesting
   html.WindowBase openNewWindow(String url) {
-    return html.window.open(url, '');
+    final isStandalone = ('standalone' in html.window.navigator) && html.window.navigator.standalone;
+    // The old window is replaced by the new window if it is running in standalone mode on iOS Safari , 
+    return html.open(url, isStandalone ? '_top' : '_blank');
   }
 
   @override
